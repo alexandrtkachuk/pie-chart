@@ -1,0 +1,94 @@
+<html>
+    <head>
+<link rel="stylesheet" href="style.css">
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+
+    var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['Work',     11],
+        ['Eat',      2],
+        ['Commute',  2],
+        ['Watch TV', 2],
+        ['Sleep',    7]
+    ]);
+
+    var options = {
+        title: 'My Daily Activities'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+}
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+        <script src="jsPDF/libs/html2pdf.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+           </head>
+           <body>
+
+        <h2>test</h2>
+
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+
+
+
+
+
+
+<div id="container" >
+
+
+<div  class="cover"  style="transform: rotate(0deg);"> <div  class="pie" style="background-color: red; transform: rotate(72deg); " info="20"  ></div></div><div  class="cover"  style="transform: rotate(72deg);"> <div  class="pie" style="background-color: green; transform: rotate(54deg); " info="15"  ></div></div><div  class="cover"  style="transform: rotate(126deg);"> <div  class="pie" style="background-color: yellow; transform: rotate(126deg); " info="35"  ></div></div><div  class="cover"  style="transform: rotate(252deg);"> <div  class="pie" style="background-color: Black; transform: rotate(18deg); " info="5"  ></div></div><div  class="cover"  style="transform: rotate(270deg);"> <div  class="pie" style="background-color: #CD5C5C; transform: rotate(36deg); " info="10"  ></div></div><div  class="cover"  style="transform: rotate(306deg);"> <div  class="pie" style="background-color: #FF1493; transform: rotate(21.6deg); " info="6"  ></div></div><div  class="cover"  style="transform: rotate(327.6deg);"> <div  class="pie" style="background-color: #00CD00; transform: rotate(32.4deg); " info="9"  ></div></div><!--div id="part2-wrapper" class="cover">
+<div id="part2" class="pie"></div>
+</div-->
+
+        </div>        
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+    <script>
+
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        var canvas = pdf.canvas;
+        var width = 600;
+        //canvas.width=8.5*72;
+        document.body.style.width=width + "px";
+        html2canvas(document.body, {
+                        canvas:canvas,
+                        onrendered: function(canvas) {
+                                            var iframe = document.createElement('iframe');
+                                            iframe.setAttribute('style', 'position:absolute;top:0;right:0;height:100%; width:600px');
+                                            document.body.appendChild(iframe);
+                                            iframe.src = pdf.output('datauristring');
+                                           //var div = document.createElement('pre');
+                                           //div.innerText=pdf.output();
+                                           //document.body.appendChild(div);
+                                        }
+                    });
+ 
+   
+
+                      </script>
+
+</html>
