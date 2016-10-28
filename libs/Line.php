@@ -77,15 +77,9 @@ class Line
         $this->x2 = $_x  ;
         $this->y2 = $_y ;
 
-
-
-        //$this->y2 *= -1;
-
-        //$this->x1 = $this->x1  * cos($angle) - $this->y1 * sin($angle);
-        //$this->y1 = $this->x1 * sin($angle) + $this->y1 * cos($angle);
     }
-    
-        public function drawLine($image, $color =0 )
+
+    public function drawLine($image, $color =0 )
     {
 
         imageline($image, 
