@@ -6,7 +6,7 @@ include LIBS . '/functions.php';
 
 
 
-$size = 1500;
+$size = 2500;
 $image = ImageCreateTrueColor($size * 2.5, 
     $size  +100);
 $background_color = 0xFFFFFF; // Белый
@@ -38,14 +38,10 @@ $y = $cy;
 $arr = turn($cx, $cy, $x, $y, 50);
 $x = $arr[0];
 $y = $arr[1];
+$black = 0x510f00;
 
-ImageString($image, 
-    100, //font
-    $x , //x
-    $y, //y
-    "xx%", //print string
-    $black);
-
+ImageFTText($image, 60, 0, $x, $y, $black, './OpenSans-Regular.ttf',
+    'xx%');
 
 $arr = turn($cx, $cy, $x, $y, 100);
 $x = $arr[0];
