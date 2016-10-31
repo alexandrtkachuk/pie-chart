@@ -5,8 +5,28 @@ include LIBS . '/functions.php';
 
 
 
+$pie = new Pie();
+$pie->add(260, 0xFFFF00, 'rex');
+$pie->add(50, 0x00FF00, 'alfa dfasf ffff fffffffff');
+$pie->add(350, 0xF633FF, 'ffds');
+$pie->add(99, 0x33CAFF, 'me me');
+$pie->add(44, 0xFFFFFF, 'asasas ff fdgdfs gdfg  gdg gdfgdf gdfgdfg ');
+$pie->add(199, 0xFF5733, 'asasas ff');
+$pie->add(rand(1,200), 0x33CAFF, 'ffds');
+$pie->add(rand(1,200), 0xFF5733, 'ffds');
+$pie->add(rand(1,200), 0xF633FF, 'ffds');
+$pie->add(rand(1,200), 0x00FF00, 'other');
 
-$size = 2500;
+
+
+
+
+$pie->draw(3000, true, 50);
+
+
+exit ();
+
+$size = 500;
 $image = ImageCreateTrueColor($size * 2.5, 
     $size  +100);
 $background_color = 0xFFFFFF; // Белый
@@ -40,7 +60,7 @@ $x = $arr[0];
 $y = $arr[1];
 $black = 0x510f00;
 
-ImageFTText($image, 60, 0, $x, $y, $black, './OpenSans-Regular.ttf',
+ImageFTText($image, 10, 0, $x, $y, $black, './fonts/OpenSans-Regular.ttf',
     'xx%');
 
 $arr = turn($cx, $cy, $x, $y, 100);
@@ -94,6 +114,7 @@ ImageString($image,
 //$line->drawLine($image);
 
 // ресэмплирование
+/*
 $new_width = ($size * 2.5)/4;
 $new_height = ($size+100)/4;
  $image_p = imagecreatetruecolor($new_width, $new_height);
@@ -102,8 +123,9 @@ imagecopyresampled($image_p, $image, 0, 0, 0, 0,
     $new_width, $new_height, 
      $size * 2.5, $size  +100);
 ImageDestroy($image);
+*/
 header('Content-type: image/png');
 
-ImagePNG($image_p);
-ImageDestroy($image_p);
+ImagePNG($image);
+ImageDestroy($image);
 
