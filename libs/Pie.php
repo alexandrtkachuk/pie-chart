@@ -5,7 +5,7 @@ class Pie
 
     protected $arrayValue;
     protected $sumValue;
-
+    protected $image;
 
     public function __construct()
     {
@@ -26,7 +26,7 @@ class Pie
     function createPie($image, $cx, $cy, $width , $height , $start , $end , $color )
     {
 
-        return  imagefilledarc ( $image, 
+        return  imagefilledarc ( $this->image, 
             $cx , 
             $cy , 
             $width , 
@@ -51,12 +51,17 @@ class Pie
 
         return array($_x, $_y);
     }
-
-    public function draw($radius, $printInfo = true, $fontSize = 10)
+    
+    public function prepare($radius, $printInfo = true, $fontSize = 10)
     {
         $size = $radius + 1;
-        $image = ImageCreateTrueColor($size * 2.5, 
+        $this->image = ImageCreateTrueColor($size * 2.5, 
             $size  + 100);
+
+        ImageFilledRectangle($this->image, 0, 0,
+            $size *2.5, 
+            $size +100, 
+            0xffffff);
 
         $y = $x = $radius / 2 + 20;
 
@@ -73,22 +78,34 @@ class Pie
             $start = $end;
             $color = $this->arrayValue[$i]['color'];
             $percent = $this->arrayValue[$i]['value']/$this->sumValue;
-            $end = $start + ($percent * 360);
+            $end = floor($start + ($percent * 360));
             $info = $this->arrayValue[$i]['info'];
+            if($start == $end)
+            {
+                $end++;
+            }
+
+            if ($i == count($this->arrayValue) - 1)
+            {
+                $end = 360;
+            }
+            
+
+            print "$i)start: $start  end: $end \n<br/>";
 
             //print $end . "\n";
 
-            $this->createPie($image, $x, $y, $radius,  $radius, 
+            $this->createPie($this->image, $x, $y, $radius,  $radius, 
                 $start , 
-                ceil($end),  
+                $end,  
                 $color);
 
-
+            
             /*print information */
 
-            imagefilledellipse($image, $info_x , $info_y + $fontSize/2,  $fontSize*2, $fontSize*2, $color);
+            imagefilledellipse($this->image, $info_x , $info_y + $fontSize/2,  $fontSize*2, $fontSize*2, $color);
 
-            ImageFTText($image, $fontSize , 0, $info_x + $fontSize*2, $info_y + $fontSize, 0x00FF00, 
+            ImageFTText($this->image, $fontSize , 0, $info_x + $fontSize*2, $info_y + $fontSize, 0x00FF00, 
                 './fonts/OpenSans-Regular.ttf',
                 $info );
             $info_y += $fontSize * 4;
@@ -113,28 +130,25 @@ class Pie
                 continue;
             }
 
-            ImageFTText($image, $fontSize, 0, $xline, $yline, 0x000000, 
+            ImageFTText($this->image, $fontSize, 0, $xline, $yline, 0x000000, 
                 './fonts/OpenSans-Regular.ttf',
                 round($percent * 100 , 1) . '%');
 
         }
 
-        ImageFilledEllipse($image, $x , $y,  $radius/2, $radius/2, 0xffffff);
-
-        $new_width = ($size * 2.5)/4;
-        $new_height = ($size+100)/4;
-        $image_p = imagecreatetruecolor($new_width, $new_height);
-
-        imagecopyresampled($image_p, $image, 0, 0, 0, 0, 
-            $new_width, $new_height, 
-            $size * 2.5, $size  +100);
-        ImageDestroy($image);
+        ImageFilledEllipse($this->image, $x , $y,  $radius/2, $radius/2, 0xffffff);
 
 
-        header('Content-type: image/GIF');
+    }
 
-        ImageGIF($image_p);
-        ImageDestroy($image_p);
+    public function draw()
+    {
+                
+
+        //header('Content-type: image/GIF');
+
+        ImageGIF($this->image);
+        ImageDestroy($this->image);
 
     }
 

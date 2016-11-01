@@ -1,3 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Моя первая веб-страница</title>
+ </head>
+
+<style>
+img {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+</style>
+ <body>
+
+
 <?php
 
 include 'config.php';
@@ -10,20 +28,33 @@ $pie->add(260, 0xFFFF00, 'rex');
 $pie->add(50, 0x00FF00, 'alfa dfasf ffff fffffffff');
 $pie->add(350, 0xF633FF, 'ffds');
 $pie->add(99, 0x33CAFF, 'me me');
-$pie->add(44, 0xFFFFFF, 'asasas ff fdgdfs gdfg  gdg gdfgdf gdfgdfg ');
+$pie->add(44, 0xff8080, 'asasas ff fdgdfs gdfg  gdg gdfgdf gdfgdfg ');
 $pie->add(199, 0xFF5733, 'asasas ff');
 $pie->add(rand(1,200), 0x33CAFF, 'ffds');
 $pie->add(rand(1,200), 0xFF5733, 'ffds');
 $pie->add(rand(1,200), 0xF633FF, 'ffds');
 $pie->add(rand(1,200), 0x00FF00, 'other');
 
+$pie->prepare(600, true, 10);
+ob_start();
+
+$pie->draw();
+$imagedata = ob_get_contents();
+
+ob_end_clean();
+
+?>
+
+<?php
+print sprintf ('<img src="data:image/gif;base64,%s">', base64_encode($imagedata));
+
+?>
 
 
+ </body>
+</html>
 
-
-$pie->draw(3000, true, 50);
-
-
+<?php
 exit ();
 
 $size = 500;
